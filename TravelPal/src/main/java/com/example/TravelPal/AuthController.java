@@ -19,6 +19,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody LoginRequest loginRequest) {
+        System.out.println(loginRequest.getEmail());
         try {
             String token = authService.loginWithEmailPassword(loginRequest.getEmail(), loginRequest.getPassword());
             return ResponseEntity.ok(token);
@@ -30,9 +31,11 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<String> signUpUser(@RequestBody LoginRequest loginRequest) {
         try {
+            System.out.println(loginRequest.getEmail());
             String token = authService.signUpWithEmailPassword(loginRequest.getEmail(), loginRequest.getPassword());
             return ResponseEntity.ok(token);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Signup failed");
         }
     }

@@ -57,3 +57,11 @@ nav ul li a.active-link {
 .required-asterisk {
   color: red;
 }
+
+.error-message {
+  color: red; /* Set the text color to red */
+  font-size: 14px; /* Set the font size */
+  margin-top: 10px; /* Add some space above the error message */
+  margin-bottom: 10px; /* Add some space below the error message */
+  text-align: center; /* Center the text */
+}
