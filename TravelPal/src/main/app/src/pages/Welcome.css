@@ -1,0 +1,31 @@
+.welcome-container {
+    text-align: center;
+    padding: 50px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .welcome-container h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+  
+  .welcome-container p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+  }
+  
+  .get-started-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .get-started-button:hover {
+    background-color: #0056b3;
+  }
