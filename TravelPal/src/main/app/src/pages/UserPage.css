@@ -1,0 +1,94 @@
+/* Full page styling */
+.user-page {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Fill the entire height of the viewport */
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  .search-area {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: white;
+    border-bottom: 2px solid black;
+  }
+  
+  .search-area label {
+    font-size: 1.2em;
+    margin-right: 10px;
+  }
+  
+  .search-area input {
+    margin-left: 10px;
+    padding: 5px;
+    width: 150px;
+  }
+  
+  .search-area button {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .results-map-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: white;
+  }
+  
+  .results-section {
+    width: 40%; /* Narrow the width of the results section */
+    height: 600px; /* Increase height of the results section */
+    overflow-y: auto; /* Allow scrolling if content exceeds height */
+  }
+  
+  .results-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .results-section table, th, td {
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .results-section th {
+    background-color: #f2f2f2;
+  }
+  
+  .map-section {
+    width: 55%; /* Increase the width of the map */
+    height: 600px; /* Increase the height of the map */
+    margin-left: 20px;
+  }
+  
+  .leaflet-map {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+  }
+  
+  .logout-button {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    cursor: pointer;
+    border: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+  

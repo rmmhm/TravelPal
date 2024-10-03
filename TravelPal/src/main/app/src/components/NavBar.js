@@ -17,7 +17,7 @@ const NavBar = () => {
         </li>
         <li>
           <NavLink
-            to="/"
+            to="/user-page"
             className={({ isActive }) => {
               return isActive ? "active-link" : "";
             }}
