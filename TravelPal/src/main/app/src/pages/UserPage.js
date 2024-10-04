@@ -32,6 +32,9 @@ const UserPage = () => {
   const [searchRadius, setRadius] = useState('');
   const [centerPosition, setCenterPosition] = useState([33.777, -84.396]); // Example: Coordinates for Atlanta
 
+  // State to store dynamically generated interest points
+  const [interestPoints, setInterestPoints] = useState([]);
+
   const handleSearch = () => {
     // Update centerPosition based on user input
     const newLatitude = parseFloat(searchLatitude);
@@ -40,6 +43,40 @@ const UserPage = () => {
       setCenterPosition([newLatitude, newLongitude]);
       console.log(`Center updated to: ${newLatitude}, ${newLongitude}`);
     }
+
+    // Dummy interest points based on the search area
+    const points = [
+      {
+        lat: newLatitude + 0.01, 
+        long: newLongitude + 0.01, 
+        name: 'Point 1',
+        distance: '5 miles',
+        rating: 4.5,
+        directionLink: 'https://maps.google.com',
+        websiteLink: 'https://www.example.com'
+      },
+      {
+        lat: newLatitude - 0.01, 
+        long: newLongitude - 0.01, 
+        name: 'Point 2',
+        distance: '3 miles',
+        rating: 3.8,
+        directionLink: 'https://maps.google.com',
+        websiteLink: 'https://www.example.com'
+      },
+      {
+        lat: newLatitude + 0.02, 
+        long: newLongitude - 0.02, 
+        name: 'Point 3',
+        distance: '2 miles',
+        rating: 4.0,
+        directionLink: 'https://maps.google.com',
+        websiteLink: 'https://www.example.com'
+      },
+    ];
+    
+    // Update the interestPoints state with the new points
+    setInterestPoints(points);
   };
 
   return (
@@ -114,24 +151,36 @@ const UserPage = () => {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker
-              position={centerPosition}
-              icon={redIcon}
-              eventHandlers={{
-                mouseover: (e) => {
-                  e.target.openPopup();
-                },
-                mouseout: (e) => {
-                  e.target.closePopup();
-                }
-              }}
-            >
-              <Popup>
-                <strong>Name</strong>: Georgia Tech<br/>
-                <strong>Distance</strong>: 69 miles<br/>
-                <strong>Rating</strong>: 0/5
-              </Popup>
-            </Marker>
+
+            {/* Loop through interestPoints and render a marker for each */}
+            {interestPoints.map((point, index) => (
+              <Marker
+                key={index}
+                position={[point.lat, point.long]}
+                icon={redIcon}
+                eventHandlers={{
+                  mouseover: (e) => {
+                    e.target.bindPopup(
+                      `<strong>Name:</strong> ${point.name}<br />
+                      <strong>Distance:</strong> ${point.distance}<br />
+                      <strong>Rating:</strong> ${point.rating}/5`,
+                      { autoClose: true, closeOnClick: false }
+                    ).openPopup();
+                  },
+                  click: (e) => {
+                    e.target.bindPopup(
+                      `<a href="${point.directionLink}" target="_blank" rel="noopener noreferrer">Get Directions</a><br />
+                      <a href="${point.websiteLink}" target="_blank" rel="noopener noreferrer">Visit Website</a>`,
+                      { autoClose: false, closeOnClick: false }
+                    ).openPopup();
+                  }
+                }}
+              >
+                {/* Empty Popup initially to allow hover and click */}
+                <Popup closeOnClick={false} autoClose={true} />
+              </Marker>
+            ))}
+
           </MapContainer>
         </div>
       </div>
