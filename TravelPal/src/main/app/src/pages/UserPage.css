@@ -1,9 +1,8 @@
-/* Full page styling */
 .user-page {
     background-color: white;
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Fill the entire height of the viewport */
+    height: 100vh;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -43,40 +42,6 @@
     justify-content: space-between;
     align-items: flex-start;
     padding: 20px;
-    background-color: white;
-  }
-  
-  .results-section {
-    width: 40%; /* Narrow the width of the results section */
-    height: 600px; /* Increase height of the results section */
-    overflow-y: auto; /* Allow scrolling if content exceeds height */
-  }
-  
-  .results-section table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  
-  .results-section table, th, td {
-    border: 1px solid black;
-    text-align: left;
-    padding: 8px;
-  }
-  
-  .results-section th {
-    background-color: #f2f2f2;
-  }
-  
-  .map-section {
-    width: 55%; /* Increase the width of the map */
-    height: 600px; /* Increase the height of the map */
-    margin-left: 20px;
-  }
-  
-  .leaflet-map {
-    width: 100%;
-    height: 100%;
     background-color: white;
   }
   

@@ -1,0 +1,22 @@
+.results-section {
+    width: 40%;
+    height: 600px;
+    overflow-y: auto;
+  }
+  
+  .results-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .results-section table, th, td {
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .results-section th {
+    background-color: #f2f2f2;
+  }
+  
