@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Sorter {
-    public List<InterestPoint> sort(List<InterestPoint> list, String criteria) {
+    public static List<InterestPoint> sort(List<InterestPoint> list, String criteria) {
         switch (criteria) {
             case "distAsc":
                 return list.stream().sorted(distLowToHighComp()).collect(Collectors.toList());
@@ -24,30 +24,30 @@ public class Sorter {
         }
     }
     
-    private Comparator<InterestPoint> distLowToHighComp() {
+    private static Comparator<InterestPoint> distLowToHighComp() {
         return Comparator.comparingDouble(InterestPoint::getDistance);
     }
 
-    private Comparator<InterestPoint> distHighToLowComp() {
+    private static Comparator<InterestPoint> distHighToLowComp() {
         return Comparator.comparingDouble(InterestPoint::getDistance).reversed();
     }
 
-    private Comparator<InterestPoint> ratingLowToHighComp() {
+    private static Comparator<InterestPoint> ratingLowToHighComp() {
         return Comparator.comparingDouble(InterestPoint::getRating);
     }
 
-    private Comparator<InterestPoint> ratingHighToLowComp() {
+    private static Comparator<InterestPoint> ratingHighToLowComp() {
         return Comparator.comparingDouble(InterestPoint::getRating).reversed();
     }
 
-    private Comparator<InterestPoint> priceLevelLowToHighComp() {
+    private static Comparator<InterestPoint> priceLevelLowToHighComp() {
         Comparator<InterestPoint> priceComp = Comparator.comparingInt(ip -> {
             return ip.getPriceLevel().length();
         });
         return priceComp;
     }
 
-    private Comparator<InterestPoint> priceLevelHighToLowComp() {
+    private static Comparator<InterestPoint> priceLevelHighToLowComp() {
         Comparator<InterestPoint> priceComp = Comparator.comparingInt(ip -> {
             return ip.getPriceLevel().length();
         });
