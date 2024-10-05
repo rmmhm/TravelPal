@@ -1,7 +1,7 @@
 package com.example.TravelPal;
 
 public class InterestPoint {
-    
+
     private float lat;
     private float longi;
     private String name;
@@ -10,14 +10,22 @@ public class InterestPoint {
     private String directionLink;
     private String websiteLink;
     private String priceLevel;
-   
-    public String getPriceLevel() {
-        return priceLevel;
+    private String address;  // Replacing vicinity with address
+
+    // Constructor
+    public InterestPoint(float lat, float longi, String name, float distance, float rating, String directionLink, String websiteLink, String priceLevel, String address) {
+        this.lat = lat;
+        this.longi = longi;
+        this.name = name;
+        this.distance = distance;
+        this.rating = rating;
+        this.directionLink = directionLink;
+        this.websiteLink = websiteLink;
+        this.priceLevel = priceLevel;
+        this.address = address;  // Set address
     }
 
-    public void setPriceLevel(String priceLevel) {
-        this.priceLevel = priceLevel;
-    }
+    // Getters and setters for all fields
 
     public float getLat() {
         return lat;
@@ -73,5 +81,21 @@ public class InterestPoint {
 
     public void setWebsiteLink(String websiteLink) {
         this.websiteLink = websiteLink;
+    }
+
+    public String getPriceLevel() {
+        return priceLevel;
+    }
+
+    public void setPriceLevel(String priceLevel) {
+        this.priceLevel = priceLevel;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
