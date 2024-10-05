@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import "./NavBar.css";
 
 const NavBar = () => {
   return (
@@ -12,29 +13,15 @@ const NavBar = () => {
               return isActive ? "active-link" : "";
             }}
           >
-            Welcome
+            Home
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            to="/"
-            className={({ isActive }) => {
-              return isActive ? "active-link" : "";
-            }}
-          >
-            Change to Map Screens
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/"
-            className={({ isActive }) => {
-              return isActive ? "active-link" : "";
-            }}
-          >
-            Change to Map Screens
-          </NavLink>
-        </li>
+        {/* replace with logged in check */}
+        {1 && (
+          <li>
+            <NavLink to="/welcome">Logout </NavLink>
+          </li>
+        )}
       </ul>
     </nav>
   );

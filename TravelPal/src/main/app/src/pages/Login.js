@@ -1,11 +1,13 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./Login.css"; // Optional: Import a CSS file for styling
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const validateForm = () => {
     if (!username || !password) {
@@ -29,22 +31,25 @@ const Login = () => {
     if (!validateForm()) {
       return;
     }
-    
+
     try {
-      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: username, password: password }),
-      });
-  
-  
+      const response = await fetch(
+        `${process.env.REACT_APP_SERVER_URL}/api/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: username, password: password }),
+        }
+      );
+
       if (response.ok) {
         const data = await response.text();
         console.log(data);
         localStorage.setItem("token", data);
         console.log("Logged in successfully");
+        navigate("/map");
       } else {
         console.error("Failed to log in");
         console.log(await response.text());
@@ -52,37 +57,56 @@ const Login = () => {
     } catch (error) {
       console.error("Error logging in: ", error);
     }
-
   };
 
-
   return (
-    <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-      <div className="login-container">
+    <div className="login-container">
       <h1>Welcome Back!</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="username">Email <span className="required-asterisk">*</span></label>
-            <input type="text" id="username" name="username" onChange={(e) => setUsername(e.target.value)} required />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password <span className="required-asterisk">*</span></label>
-            <input type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)} required />
-          </div>
+      <form className="login-form-container" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="username">
+            Email <span className="required-asterisk">*</span>
+          </label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">
+            Password <span className="required-asterisk">*</span>
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
 
-          {error && <p className="error-message">{error}</p>}
+        {error && <p className="error-message">{error}</p>}
 
-          <button type="submit" className="login-button">Log in</button>
-          <div className="additional-options">
-            <Link to="/forgot-password" className="forgot-password-link">Forgot Password?</Link>
-            <p>Don't have an account? <Link to="/sign-up" className="sign-up-link">Sign Up</Link></p>
-          </div>
-        </form>
-      </div>
+        <button type="submit" className="login-button">
+          Log in
+        </button>
+        <div className="additional-options">
+          <Link to="/forgot-password" className="forgot-password-link">
+            Forgot Password?
+          </Link>
+          <p>
+            Don't have an account?{" "}
+            <Link to="/signup" className="sign-up-link">
+              Sign Up
+            </Link>
+          </p>
+        </div>
+      </form>
     </div>
   );
 };
-
-
 
 export default Login;
