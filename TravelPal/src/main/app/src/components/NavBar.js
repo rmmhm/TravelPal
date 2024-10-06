@@ -93,7 +93,11 @@ const NavBar = () => {
         {/* replace with logged in check */}
         {isAuthenticated && (
           <li>
-            <NavLink to="/welcome" className="logout-link" onClick={handleLogout}>
+            <NavLink
+              to="/welcome"
+              className="logout-link"
+              onClick={handleLogout}
+            >
               Logout
             </NavLink>
           </li>

@@ -38,6 +38,10 @@ public class GooglePlacesParser {
             String rating = result.has("rating") ? result.get("rating").asText() : "N/A";
             String priceLevel = result.has("price_level") ? convertPriceNumToString(result.get("price_level").asInt()) : "N/A";
             String websiteLink = result.has("website") ? result.get("website").asText() : "N/A";
+            List<String> types = new ArrayList<>();
+            for (JsonNode type : result.get("types")) {
+                types.add(type.asText());
+            }
 
             // Construct the Google Maps direction link
             String directionLink = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + longi;
@@ -46,7 +50,7 @@ public class GooglePlacesParser {
             float distance = calculateDistanceInMiles(originLat, originLong, lat, longi);
 
             // Create and add the InterestPoint to the list
-            InterestPoint point = new InterestPoint(lat, longi, name, distance, rating, directionLink, websiteLink, priceLevel, address);
+            InterestPoint point = new InterestPoint(lat, longi, name, distance, rating, directionLink, websiteLink, priceLevel, address, types);
             interestPoints.add(point);
         }
         
