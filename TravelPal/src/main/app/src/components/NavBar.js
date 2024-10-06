@@ -4,19 +4,39 @@ import "./NavBar.css";
 
 const NavBar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [shouldValidate, setShouldValidate] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      console.log(location.pathname);
+    const handleStorageTokenChange = () => {
+      setShouldValidate(true);
+    };
+    window.addEventListener("tokenChange", handleStorageTokenChange);
+
+    return () => {
+      window.removeEventListener("tokenChange", handleStorageTokenChange);
+    };
+  }, [navigate]);
+
+  useEffect(() => {
+    if (!isAuthenticated && !isLoggingOut && !shouldValidate && !isLoading) {
       if (location.pathname.includes("/map")) {
-        navigate("/welcome");
+        // navigate("/welcome");
       }
-    } else {
+    } else if (isAuthenticated && !isLoading && !isLoggingOut) {
       navigate("/map");
     }
-  }, [isAuthenticated, location.pathname, navigate]);
+  }, [
+    isAuthenticated,
+    isLoggingOut,
+    location.pathname,
+    navigate,
+    isLoading,
+    shouldValidate,
+  ]);
 
   useEffect(() => {
     const validateToken = async () => {
@@ -36,6 +56,7 @@ const NavBar = () => {
 
           if (response.ok) {
             setIsAuthenticated(true);
+            console.log("validation authentication");
           } else {
             setIsAuthenticated(false);
             console.error("Failed to validate token");
@@ -44,15 +65,18 @@ const NavBar = () => {
         } catch (error) {
           console.error("Error validating token: ", error);
           setIsAuthenticated(false);
-          navigate("/welcome");
         }
       }
+      setIsLoading(false);
     };
 
     validateToken();
-  }, [navigate]);
+    setShouldValidate(false);
+  }, [navigate, shouldValidate, isLoading]);
 
-  const handleLogout = async () => {
+  const handleLogout = async (event) => {
+    event.preventDefault();
+    setIsLoggingOut(true);
     let token = localStorage.getItem("token");
     let response = await fetch(
       `${process.env.REACT_APP_SERVER_URL}/api/auth/logout`,
@@ -69,11 +93,13 @@ const NavBar = () => {
       localStorage.removeItem("token");
       setIsAuthenticated(false);
       navigate("/login");
+      setIsLoggingOut(false); // Update logout state
+      // After successful logout and setting isLoggingOut to false, navigate
     } else {
       console.error("Failed to log out");
       console.log(await response.text());
       setIsAuthenticated(false);
-      navigate("/welcome");
+      setIsLoggingOut(false); // Ensure we stop showing logging out state
     }
   };
 
@@ -93,16 +119,15 @@ const NavBar = () => {
         {/* replace with logged in check */}
         {isAuthenticated && (
           <li>
-            <NavLink
-              to="/welcome"
-              className="logout-link"
-              onClick={handleLogout}
-            >
+            <NavLink to="#" className="logout-link" onClick={handleLogout}>
               Logout
             </NavLink>
           </li>
         )}
       </ul>
+      {isLoggingOut && (
+        <div className="logging-out-indicator">Logging Out...</div>
+      )}
     </nav>
   );
 };
