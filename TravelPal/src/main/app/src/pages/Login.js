@@ -32,6 +32,8 @@ const Login = () => {
       return;
     }
 
+    // localStorage.setItem("isLoggingIn", "true"); // Set flag in local storage
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_SERVER_URL}/api/auth/login`,
@@ -48,16 +50,17 @@ const Login = () => {
 
       if (response.ok) {
         const data = await response.text();
-        console.log(data);
         localStorage.setItem("token", data);
-        console.log("Logged in successfully");
-        navigate("/map");
+        // The navbar will autoredirect
+        window.dispatchEvent(new Event("tokenChange"));
       } else {
         console.error("Failed to log in");
         console.log(await response.text());
       }
     } catch (error) {
       console.error("Error logging in: ", error);
+    } finally {
+      // localStorage.removeItem("isLoggingIn"); // Clear flag in local storage
     }
   };
 
