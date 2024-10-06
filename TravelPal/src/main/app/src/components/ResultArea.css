@@ -21,3 +21,17 @@ td {
 .results-section th {
   background-color: #f2f2f2;
 }
+
+.entries-control {
+  margin-bottom: 10px;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.entries-control input {
+  margin: 0 5px;
+  padding: 5px;
+  width: 30px;
+  text-align: right;
+}
