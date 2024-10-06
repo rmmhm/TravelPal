@@ -105,4 +105,20 @@ public class AuthService {
             return false;
         }
     }
+
+    public boolean revokeAuthToken(String idToken) {
+        try {
+            // Revoke the token with Firebase Admin SDK
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+            String uid = decodedToken.getUid();  // You can get the user ID if needed
+
+            // Revoke the refresh token
+            FirebaseAuth.getInstance().revokeRefreshTokens(uid);
+            
+            return true;  // Token is revoked
+        } catch (Exception e) {
+            // Failed to revoke token
+            return false;
+        }
+    }
 }
