@@ -78,6 +78,7 @@ const Map = () => {
             value={searchRadius}
             onChange={(e) => setSearchRadius(e.target.value)}
           />
+          miles
         </label>
         <button onClick={handleSearch}>Find Places!</button>
       </div>
