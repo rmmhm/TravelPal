@@ -14,6 +14,15 @@ const ResultArea = ({ interestPoints }) => {
   return (
     <div className="results-section">
       <h2>Search Results</h2>
+      <div className="filter-section">
+        <label>Filters:</label>
+        <select id="filter">
+          <option value="all">All</option>
+          <option value="food">Food</option>
+          <option value="entertainment">Entertainment</option>
+        </select>
+      </div>
+
       <div className="entries-control">
         Show
         <input

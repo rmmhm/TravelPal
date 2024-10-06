@@ -11,22 +11,10 @@
 
 .search-area {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   padding: 20px;
   background-color: white;
   border-bottom: 2px solid black;
-}
-
-.search-input-area {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.search-filter-area {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
 }
 
 .search-area label {
@@ -40,7 +28,7 @@
   width: 150px;
 }
 
-.search-input-area button {
+.search-area button {
   background-color: black;
   color: white;
   padding: 10px 20px;

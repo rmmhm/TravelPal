@@ -54,40 +54,31 @@ const Map = () => {
   return (
     <div className="user-page">
       <div className="search-area">
-        <div className="search-input-area">
-          {" "}
-          <label>
-            Latitude:
-            <input
-              type="text"
-              value={searchLatitude}
-              onChange={(e) => setSearchLatitude(e.target.value)}
-            />
-          </label>
-          <label>
-            Longitude:
-            <input
-              type="text"
-              value={searchLongitude}
-              onChange={(e) => setSearchLongitude(e.target.value)}
-            />
-          </label>
-          <label>
-            Search Radius:
-            <input
-              type="text"
-              value={searchRadius}
-              onChange={(e) => setSearchRadius(e.target.value)}
-            />
-          </label>
-          <button onClick={handleSearch}>Find Places!</button>
-        </div>
-        <div className="search-filter-area">
-          <label>Filters:</label>
-          <button>Food</button>
-          <button>Fun</button>
-          <button>None</button>
-        </div>
+        <label>
+          Latitude:
+          <input
+            type="text"
+            value={searchLatitude}
+            onChange={(e) => setSearchLatitude(e.target.value)}
+          />
+        </label>
+        <label>
+          Longitude:
+          <input
+            type="text"
+            value={searchLongitude}
+            onChange={(e) => setSearchLongitude(e.target.value)}
+          />
+        </label>
+        <label>
+          Search Radius:
+          <input
+            type="text"
+            value={searchRadius}
+            onChange={(e) => setSearchRadius(e.target.value)}
+          />
+        </label>
+        <button onClick={handleSearch}>Find Places!</button>
       </div>
 
       <div className="results-map-container">
