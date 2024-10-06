@@ -47,14 +47,14 @@ public class Sorter {
 
     private static Comparator<InterestPoint> priceLevelLowToHighComp() {
         Comparator<InterestPoint> priceComp = Comparator.comparingInt(ip -> {
-            return ip.getPriceLevel().length();
+            return ip.getPriceLevel().equals("N/A") ? -1  : ip.getPriceLevel().length();
         });
         return priceComp;
     }
 
     private static Comparator<InterestPoint> priceLevelHighToLowComp() {
         Comparator<InterestPoint> priceComp = Comparator.comparingInt(ip -> {
-            return ip.getPriceLevel().length();
+            return ip.getPriceLevel().equals("N/A") ? -1  : ip.getPriceLevel().length();
         });
         return priceComp.reversed();
     }

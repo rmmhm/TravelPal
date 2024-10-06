@@ -64,7 +64,7 @@ public class InterestPoint {
     }
 
     public float getRatingAsFloat() {
-        return rating != "N/A" ? Float.parseFloat(rating) : 0;
+        return rating.equals("N/A") ? -1.0f : Float.parseFloat(rating);
     }
 
     public void setRating(String rating) {
