@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import "./NavBar.css";
 
 const NavBar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate("/welcome");
+      console.log(location.pathname);
+      if (location.pathname.includes("/map")) {
+        navigate("/welcome");
+      }
     } else {
       navigate("/map");
     }
-}, [isAuthenticated, navigate]);
+  }, [isAuthenticated, location.pathname, navigate]);
 
   useEffect(() => {
     const validateToken = async () => {
@@ -29,25 +33,49 @@ const NavBar = () => {
               },
             }
           );
-          
+
           if (response.ok) {
             setIsAuthenticated(true);
           } else {
             setIsAuthenticated(false);
-            navigate("/welcome")
             console.error("Failed to validate token");
             console.log(await response.text());
           }
         } catch (error) {
           console.error("Error validating token: ", error);
           setIsAuthenticated(false);
-          navigate("/welcome")
+          navigate("/welcome");
         }
-      };
-  }
+      }
+    };
 
     validateToken();
-  }, []);
+  }, [navigate]);
+
+  const handleLogout = async () => {
+    let token = localStorage.getItem("token");
+    let response = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/api/auth/logout`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+
+    if (response.ok) {
+      localStorage.removeItem("token");
+      setIsAuthenticated(false);
+      navigate("/login");
+    } else {
+      console.error("Failed to log out");
+      console.log(await response.text());
+      setIsAuthenticated(false);
+      navigate("/welcome");
+    }
+  };
 
   return (
     <nav>
@@ -65,7 +93,9 @@ const NavBar = () => {
         {/* replace with logged in check */}
         {isAuthenticated && (
           <li>
-            <NavLink to="/welcome" className="logout-link">Logout </NavLink>
+            <NavLink to="/welcome" className="logout-link" onClick={handleLogout}>
+              Logout
+            </NavLink>
           </li>
         )}
       </ul>
