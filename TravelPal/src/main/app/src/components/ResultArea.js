@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ResultArea.css";
 
-const ResultArea = ({interestPoints}) => {
+const ResultArea = ({ interestPoints }) => {
   const [entriesToShow, setEntriesToShow] = useState(10);
   const [sortedPoints, setSortedPoints] = useState(interestPoints);
   const [sortCriteria, setSortCriteria] = useState("distAsc");
@@ -39,8 +39,17 @@ const ResultArea = ({interestPoints}) => {
   return (
     <div className="results-section">
       <h2>Search Results</h2>
+      <div className="filter-section">
+        <label>Filters:</label>
+        <select id="filter">
+          <option value="all">All</option>
+          <option value="food">Food</option>
+          <option value="entertainment">Entertainment</option>
+        </select>
+      </div>
+
       <div className="entries-control">
-        Show 
+        Show
         <input
           type="number"
           min="1"

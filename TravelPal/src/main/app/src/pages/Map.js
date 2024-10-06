@@ -14,7 +14,7 @@ const Map = () => {
     const newLatitude = parseFloat(searchLatitude);
     const newLongitude = parseFloat(searchLongitude);
     const newRadius = parseFloat(searchRadius);
-    
+
     if (!isNaN(newLatitude) && !isNaN(newLongitude) && !isNaN(newRadius)) {
       setCenterPosition([newLatitude, newLongitude]);
       console.log(`Center updated to: ${newLatitude}, ${newLongitude}`);
@@ -42,7 +42,6 @@ const Map = () => {
 
         // Assuming interestPointsData is an array of interest points
         setInterestPoints(interestPointsData); // Set the interestPoints directly from backend
-
       } else {
         console.error("Failed to fetch interest points");
         console.log(await response.text());
@@ -86,7 +85,10 @@ const Map = () => {
       <div className="results-map-container">
         <ResultArea interestPoints={interestPoints} />
         {/* Pass interestPoints to ResultArea component */}
-        <MapSection centerPosition={centerPosition} interestPoints={interestPoints} />
+        <MapSection
+          centerPosition={centerPosition}
+          interestPoints={interestPoints}
+        />
         {/* Pass both centerPosition and interestPoints to MapSection component */}
       </div>
     </div>

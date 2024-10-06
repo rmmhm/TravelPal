@@ -36,6 +36,10 @@ td {
   text-align: right;
 }
 
+.filter-section {
+  margin-bottom: 15px;
+}
+
 .entries-control select {
   margin-left: 1px;
   padding: 5px;
