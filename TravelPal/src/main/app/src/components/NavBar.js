@@ -19,7 +19,7 @@ const NavBar = () => {
         {/* replace with logged in check */}
         {1 && (
           <li>
-            <NavLink to="/welcome">Logout </NavLink>
+            <NavLink to="/welcome" className="logout-link">Logout </NavLink>
           </li>
         )}
       </ul>
