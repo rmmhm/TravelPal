@@ -38,6 +38,7 @@ const MapSection = ({ centerPosition, interestPoints }) => {
       >
         {/* Update map center when centerPosition changes */}
         <UpdateMapCenter center={centerPosition} />
+
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -47,24 +48,26 @@ const MapSection = ({ centerPosition, interestPoints }) => {
         {interestPoints.map((point, index) => (
           <Marker
             key={index}
-            position={[point.lat, point.long]}
+            position={[point.lat, point.longi]} // Using lat and longi from backend response
             icon={redIcon}
             eventHandlers={{
               mouseover: (e) => {
                 e.target
                   .bindPopup(
                     `<strong>Name:</strong> ${point.name}<br />
-                      <strong>Distance:</strong> ${point.distance}<br />
-                      <strong>Rating:</strong> ${point.rating}/5`,
+                      <strong>Distance:</strong> ${point.distance.toFixed(2)} miles<br />
+                      <strong>Rating:</strong> ${point.rating === 6 ? "N/A" : `${point.rating}/5`}`,
                     { autoClose: true, closeOnClick: false }
                   )
                   .openPopup();
               },
               click: (e) => {
+                const websiteDisplay = point.websiteLink === "N/A" ? "N/A" : `<a href="${point.websiteLink}" target="_blank" rel="noopener noreferrer">Visit Website</a>`;
+                
                 e.target
                   .bindPopup(
                     `<a href="${point.directionLink}" target="_blank" rel="noopener noreferrer">Get Directions</a><br />
-                      <a href="${point.websiteLink}" target="_blank" rel="noopener noreferrer">Visit Website</a>`,
+                     ${websiteDisplay}`,
                     { autoClose: false, closeOnClick: false }
                   )
                   .openPopup();

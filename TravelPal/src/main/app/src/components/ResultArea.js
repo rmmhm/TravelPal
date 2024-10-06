@@ -1,7 +1,7 @@
 import React from "react";
 import "./ResultArea.css";
 
-const ResultArea = () => {
+const ResultArea = ({interestPoints}) => {
   return (
     <div className="results-section">
       <h2>Search Results</h2>
@@ -16,34 +16,15 @@ const ResultArea = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>JCT Kitchen & Bar</td>
-            <td>1815</td>
-            <td>1198 Howell Mill Rd #18, Atlanta, GA 30318</td>
-            <td>4/5</td>
-            <td>$$</td>
-          </tr>
-          <tr>
-            <td>Piju Belly</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-          </tr>
-          <tr>
-            <td>Miller Union</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-          </tr>
-          <tr>
-            <td>West Egg Cafe</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-          </tr>
+          {interestPoints.map((point, index) => (
+            <tr key={index}>
+              <td>{point.name}</td>
+              <td>{point.distance}</td>
+              <td>{point.address}</td>
+              <td>{point.rating}</td>
+              <td>{point.priceLevel}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
