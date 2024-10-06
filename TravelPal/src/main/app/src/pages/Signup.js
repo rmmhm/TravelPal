@@ -60,7 +60,8 @@ const Signup = () => {
         console.log(data);
         localStorage.setItem("token", data);
         console.log("Signed up successfully");
-        navigate("/login");
+        // The navbar will auto redirect
+        window.dispatchEvent(new Event("tokenChange"));
       } else {
         console.error("Failed to sign up");
         console.log(await response.text());

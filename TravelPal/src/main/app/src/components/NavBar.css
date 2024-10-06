@@ -13,8 +13,8 @@ nav ul {
   width: 100vw;
   display: flex;
   justify-content: space-between;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-left: 0px;
+  padding-right: 0px;
   margin: 0;
   list-style: none;
 }
@@ -35,15 +35,36 @@ nav ul li a {
   padding-bottom: 1rem;
 }
 
+nav ul li a.active-link:hover {
+  background-color: #00a8ff;
+  color: white;
+}
+
 nav ul li a:hover {
-  background-color: #f9f9f9;
-  color: #00a8ff;
+  background-color: #00a8ff;
+  color: white;
 }
 
 nav ul li a.active-link {
-  background-color: #f9f9f9;
+  background-color: white;
   color: #00a8ff;
 }
+
+.logging-out-indicator {
+  position: fixed; /* Fixed position to overlay on the screen */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for centering */
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+  color: white; /* White text color */
+  padding: 20px; /* Padding around the text */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1.2em; /* Larger font size */
+  z-index: 1000; /* High z-index to overlay other elements */
+  text-align: center; /* Center the text */
+}
+
+
 
 .logout-link {
   color: red;
