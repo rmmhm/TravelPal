@@ -9,7 +9,7 @@ const ResultArea = ({interestPoints}) => {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Distance to Point (ft)</th>
+            <th>Distance to Point (mi)</th>
             <th>Address</th>
             <th>Rating</th>
             <th>Price Level</th>
@@ -19,7 +19,7 @@ const ResultArea = ({interestPoints}) => {
           {interestPoints.map((point, index) => (
             <tr key={index}>
               <td>{point.name}</td>
-              <td>{point.distance}</td>
+              <td>{point.distance.toFixed(2)}</td>
               <td>{point.address}</td>
               <td>{point.rating}</td>
               <td>{point.priceLevel}</td>
