@@ -24,6 +24,7 @@
 
 .search-area input {
   margin-left: 10px;
+  margin-right: 5px;
   padding: 5px;
   width: 150px;
 }
