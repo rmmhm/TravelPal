@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ResultArea.css";
 
-const ResultArea = ({interestPoints}) => {
+const ResultArea = ({ interestPoints }) => {
   const [entriesToShow, setEntriesToShow] = useState(10);
 
   const handleEntriesChange = (event) => {
@@ -15,7 +15,7 @@ const ResultArea = ({interestPoints}) => {
     <div className="results-section">
       <h2>Search Results</h2>
       <div className="entries-control">
-        Show 
+        Show
         <input
           type="number"
           min="1"

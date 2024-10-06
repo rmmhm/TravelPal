@@ -55,15 +55,22 @@ const MapSection = ({ centerPosition, interestPoints }) => {
                 e.target
                   .bindPopup(
                     `<strong>Name:</strong> ${point.name}<br />
-                      <strong>Distance:</strong> ${point.distance.toFixed(2)} miles<br />
-                      <strong>Rating:</strong> ${point.rating === "N/A" ? "N/A" :`${point.rating}/5`}`,
+                      <strong>Distance:</strong> ${point.distance.toFixed(
+                        2
+                      )} miles<br />
+                      <strong>Rating:</strong> ${
+                        point.rating === "N/A" ? "N/A" : `${point.rating}/5`
+                      }`,
                     { autoClose: true, closeOnClick: false }
                   )
                   .openPopup();
               },
               click: (e) => {
-                const websiteDisplay = point.websiteLink === "N/A" ? "N/A" : `<a href="${point.websiteLink}" target="_blank" rel="noopener noreferrer">Visit Website</a>`;
-                
+                const websiteDisplay =
+                  point.websiteLink === "N/A"
+                    ? "N/A"
+                    : `<a href="${point.websiteLink}" target="_blank" rel="noopener noreferrer">Visit Website</a>`;
+
                 e.target
                   .bindPopup(
                     `<a href="${point.directionLink}" target="_blank" rel="noopener noreferrer">Get Directions</a><br />

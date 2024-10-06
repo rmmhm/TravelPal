@@ -14,7 +14,7 @@ const Map = () => {
     const newLatitude = parseFloat(searchLatitude);
     const newLongitude = parseFloat(searchLongitude);
     const newRadius = parseFloat(searchRadius);
-    
+
     if (!isNaN(newLatitude) && !isNaN(newLongitude) && !isNaN(newRadius)) {
       setCenterPosition([newLatitude, newLongitude]);
       console.log(`Center updated to: ${newLatitude}, ${newLongitude}`);
@@ -42,7 +42,6 @@ const Map = () => {
 
         // Assuming interestPointsData is an array of interest points
         setInterestPoints(interestPointsData); // Set the interestPoints directly from backend
-
       } else {
         console.error("Failed to fetch interest points");
         console.log(await response.text());
@@ -55,37 +54,49 @@ const Map = () => {
   return (
     <div className="user-page">
       <div className="search-area">
-        <label>
-          Latitude:
-          <input
-            type="text"
-            value={searchLatitude}
-            onChange={(e) => setSearchLatitude(e.target.value)}
-          />
-        </label>
-        <label>
-          Longitude:
-          <input
-            type="text"
-            value={searchLongitude}
-            onChange={(e) => setSearchLongitude(e.target.value)}
-          />
-        </label>
-        <label>
-          Search Radius:
-          <input
-            type="text"
-            value={searchRadius}
-            onChange={(e) => setSearchRadius(e.target.value)}
-          />
-        </label>
-        <button onClick={handleSearch}>Find Places!</button>
+        <div className="search-input-area">
+          {" "}
+          <label>
+            Latitude:
+            <input
+              type="text"
+              value={searchLatitude}
+              onChange={(e) => setSearchLatitude(e.target.value)}
+            />
+          </label>
+          <label>
+            Longitude:
+            <input
+              type="text"
+              value={searchLongitude}
+              onChange={(e) => setSearchLongitude(e.target.value)}
+            />
+          </label>
+          <label>
+            Search Radius:
+            <input
+              type="text"
+              value={searchRadius}
+              onChange={(e) => setSearchRadius(e.target.value)}
+            />
+          </label>
+          <button onClick={handleSearch}>Find Places!</button>
+        </div>
+        <div className="search-filter-area">
+          <label>Filters:</label>
+          <button>Food</button>
+          <button>Fun</button>
+          <button>None</button>
+        </div>
       </div>
 
       <div className="results-map-container">
         <ResultArea interestPoints={interestPoints} />
         {/* Pass interestPoints to ResultArea component */}
-        <MapSection centerPosition={centerPosition} interestPoints={interestPoints} />
+        <MapSection
+          centerPosition={centerPosition}
+          interestPoints={interestPoints}
+        />
         {/* Pass both centerPosition and interestPoints to MapSection component */}
       </div>
     </div>
