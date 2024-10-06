@@ -60,11 +60,10 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logoutUser(@RequestHeader("Authorization") String token, HttpSession session) {
+    public ResponseEntity<String> logoutUser(@RequestHeader("Authorization") String token) {
         try {
             if (authService.verifyIdToken(token)) {
                 authService.revokeAuthToken(token);
-                session.removeAttribute("authToken");
                 return ResponseEntity.ok("Logged out");
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not authenticated");
