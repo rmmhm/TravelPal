@@ -1,12 +1,12 @@
 package com.example.TravelPal;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class GooglePlacesParser {
@@ -34,7 +34,7 @@ public class GooglePlacesParser {
             String name = result.has("name") ? result.get("name").asText() : "N/A";
             String address = result.has("vicinity") ? result.get("vicinity").asText() : "N/A";
             float rating = result.has("rating") ? result.get("rating").floatValue() : 6;
-            String priceLevel = result.has("price_level") ? result.get("price_level").asText() : "N/A";
+            String priceLevel = result.has("price_level") ? convertPriceNumToString(result.get("price_level").asInt()) : "N/A";
             String websiteLink = result.has("website") ? result.get("website").asText() : "N/A";
 
             // Construct the Google Maps direction link
@@ -64,5 +64,9 @@ public class GooglePlacesParser {
 
         // Distance in miles
         return (float) (EARTH_RADIUS_MILES * c);
+    }
+
+    private String convertPriceNumToString(int num) {
+        return new String(new char[num]).replace('\0', '$');
     }
 }
