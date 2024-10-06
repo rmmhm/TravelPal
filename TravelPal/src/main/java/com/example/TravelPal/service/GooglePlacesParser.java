@@ -1,12 +1,14 @@
-package com.example.TravelPal;
+package com.example.TravelPal.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.TravelPal.model.InterestPoint;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 @Service
 public class GooglePlacesParser {
@@ -33,7 +35,7 @@ public class GooglePlacesParser {
             // Extract other fields like name, rating, address (formatted_address), and price level
             String name = result.has("name") ? result.get("name").asText() : "N/A";
             String address = result.has("vicinity") ? result.get("vicinity").asText() : "N/A";
-            float rating = result.has("rating") ? result.get("rating").floatValue() : 6;
+            String rating = result.has("rating") ? result.get("rating").asText() : "N/A";
             String priceLevel = result.has("price_level") ? convertPriceNumToString(result.get("price_level").asInt()) : "N/A";
             String websiteLink = result.has("website") ? result.get("website").asText() : "N/A";
 

@@ -56,7 +56,7 @@ const MapSection = ({ centerPosition, interestPoints }) => {
                   .bindPopup(
                     `<strong>Name:</strong> ${point.name}<br />
                       <strong>Distance:</strong> ${point.distance.toFixed(2)} miles<br />
-                      <strong>Rating:</strong> ${point.rating === 6 ? "N/A" : `${point.rating}/5`}`,
+                      <strong>Rating:</strong> ${point.rating === "N/A" ? "N/A" :`${point.rating}/5`}`,
                     { autoClose: true, closeOnClick: false }
                   )
                   .openPopup();

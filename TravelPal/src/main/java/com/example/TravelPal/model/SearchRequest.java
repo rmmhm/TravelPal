@@ -1,4 +1,4 @@
-package com.example.TravelPal;
+package com.example.TravelPal.model;
 
 public class SearchRequest {
     

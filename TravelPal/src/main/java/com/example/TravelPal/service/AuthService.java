@@ -1,4 +1,4 @@
-package com.example.TravelPal;
+package com.example.TravelPal.service;
 
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
