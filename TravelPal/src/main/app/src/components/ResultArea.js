@@ -40,7 +40,7 @@ const ResultArea = ({interestPoints}) => {
               <td>{point.name}</td>
               <td>{point.distance.toFixed(2)}</td>
               <td>{point.address}</td>
-              <td>{point.rating}</td>
+              <td>{point.rating === "N/A" ? "N/A" : `${point.rating}/5`}</td>
               <td>{point.priceLevel}</td>
             </tr>
           ))}

@@ -38,11 +38,11 @@ public class Sorter {
     }
 
     private static Comparator<InterestPoint> ratingLowToHighComp() {
-        return Comparator.comparingDouble(InterestPoint::getRating);
+        return Comparator.comparingDouble(InterestPoint::getRatingAsFloat);
     }
 
     private static Comparator<InterestPoint> ratingHighToLowComp() {
-        return Comparator.comparingDouble(InterestPoint::getRating).reversed();
+        return Comparator.comparingDouble(InterestPoint::getRatingAsFloat).reversed();
     }
 
     private static Comparator<InterestPoint> priceLevelLowToHighComp() {

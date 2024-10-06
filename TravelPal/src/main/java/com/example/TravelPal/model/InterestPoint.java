@@ -6,14 +6,14 @@ public class InterestPoint {
     private float longi;
     private String name;
     private float distance;
-    private float rating;
+    private String rating;
     private String directionLink;
     private String websiteLink;
     private String priceLevel;
     private String address;  // Replacing vicinity with address
 
     // Constructor
-    public InterestPoint(float lat, float longi, String name, float distance, float rating, String directionLink, String websiteLink, String priceLevel, String address) {
+    public InterestPoint(float lat, float longi, String name, float distance, String rating, String directionLink, String websiteLink, String priceLevel, String address) {
         this.lat = lat;
         this.longi = longi;
         this.name = name;
@@ -59,11 +59,15 @@ public class InterestPoint {
         this.distance = distance;
     }
 
-    public float getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
+    public float getRatingAsFloat() {
+        return rating != "N/A" ? Float.parseFloat(rating) : 0;
+    }
+
+    public void setRating(String rating) {
         this.rating = rating;
     }
 
