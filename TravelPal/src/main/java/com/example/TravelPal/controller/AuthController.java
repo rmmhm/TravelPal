@@ -45,7 +45,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/isAuthenticated")
+    @PostMapping("/validate")
     public ResponseEntity<String> isAuthenticated(@RequestHeader("Authorization") String token) {
         try {
             if (authService.verifyIdToken(token)) {
