@@ -12,11 +12,12 @@ public class InterestPoint {
     private String directionLink;
     private String websiteLink;
     private String priceLevel;
-    private String address;  // Replacing vicinity with address
+    private String address;  
+    private String isOpen;
     private List<String> types;
 
     // Constructor
-    public InterestPoint(float lat, float longi, String name, float distance, String rating, String directionLink, String websiteLink, String priceLevel, String address, List<String> types) {
+    public InterestPoint(float lat, float longi, String name, float distance, String rating, String directionLink, String websiteLink, String priceLevel, String address, String isOpen, List<String> types) {
         this.lat = lat;
         this.longi = longi;
         this.name = name;
@@ -26,6 +27,7 @@ public class InterestPoint {
         this.websiteLink = websiteLink;
         this.priceLevel = priceLevel;
         this.address = address;  // Set address
+        this.isOpen = isOpen;
         this.types = types;
     }
 
@@ -105,6 +107,14 @@ public class InterestPoint {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getIsOpen() {
+        return isOpen;
+    }
+
+    public void setIsOpen(String isOpen) {
+        this.isOpen = isOpen;
     }
 
     public List<String> getTypes() {
