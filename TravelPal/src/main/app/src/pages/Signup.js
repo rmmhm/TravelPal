@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./Signup.css"; // Optional: Import a CSS file for styling
 import { Link, useNavigate } from "react-router-dom";
+import "./Signup.css"; // Optional: Import a CSS file for styling
 
 const Signup = () => {
   const [username, setUsername] = useState("");
@@ -45,7 +45,7 @@ const Signup = () => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/api/auth/signup`,
+        `${process.env.REACT_APP_SERVER_URL}/auth/signup`,
         {
           method: "POST",
           headers: {
