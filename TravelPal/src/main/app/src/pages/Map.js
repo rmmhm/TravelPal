@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./Map.css";
-import ResultArea from "../components/ResultArea";
 import MapSection from "../components/MapSection";
+import ResultArea from "../components/ResultArea";
+import "./Map.css";
 
 const Map = () => {
   const [searchLatitude, setSearchLatitude] = useState("");
@@ -22,7 +22,7 @@ const Map = () => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/api/googleApiCall`,
+        `${process.env.REACT_APP_SERVER_URL}/googleApiCall`,
         {
           method: "POST",
           headers: {

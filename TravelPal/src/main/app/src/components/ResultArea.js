@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./ResultArea.css";
 
 const ResultArea = ({ interestPoints }) => {
@@ -26,7 +26,7 @@ const ResultArea = ({ interestPoints }) => {
   useEffect(() => {
     const sortPoints = async () => {
       const response = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/api/sort?criteria=${sortCriteria}`,
+        `${process.env.REACT_APP_SERVER_URL}/sort?criteria=${sortCriteria}`,
         {
           method: "POST",
           headers: {
