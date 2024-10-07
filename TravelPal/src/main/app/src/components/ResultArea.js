@@ -8,6 +8,7 @@ const ResultArea = ({ interestPoints }) => {
   const [filteredPoints, setFilteredPoints] = useState(interestPoints);
   const [entriesToShow, setEntriesToShow] = useState(10);
 
+  // Update num entries field
   const handleEntriesChange = (event) => {
     const value = Number(event.target.value);
     if (value > 0) {
@@ -15,14 +16,17 @@ const ResultArea = ({ interestPoints }) => {
     }
   };
 
+  // Update sorting criteria
   const handleSortChange = (event) => {
     setSortCriteria(event.target.value);
   };
 
+  /// Update results filter
   const handleFilterChange = (event) => {
     setFilterCriteria(event.target.value);
   };
 
+  // Re-sort interest points when sorting criteria changes
   useEffect(() => {
     const sortPoints = async () => {
       const response = await fetch(
@@ -43,17 +47,17 @@ const ResultArea = ({ interestPoints }) => {
     sortPoints();
   }, [sortCriteria, interestPoints]);
 
+  // Re-filter the sorted points when filtering criteria changes, or when interest points get re-sorted
   useEffect(() => {
     const newFilteredPoints = sortedPoints.filter(
       (point) => filterCriteria === "all" || point.types.includes(filterCriteria)
     );
-    setFilteredPoints(newFilteredPoints); // Update filteredPoints with the filtered list
+    setFilteredPoints(newFilteredPoints);
   }, [filterCriteria, sortedPoints]);
 
+  // Reset num entries if the number of filtered points changes
   useEffect(() => {
-    // Update entriesToShow based on filteredPoints length
     if (filteredPoints.length > 0 && entriesToShow === 0) {
-      // Set entriesToShow to a default value (e.g., 10) or the length of filtered points
       setEntriesToShow(Math.min(filteredPoints.length, 10)); 
     } else if (filteredPoints.length > 0) {
       setEntriesToShow(Math.min(filteredPoints.length, entriesToShow));
@@ -104,6 +108,7 @@ const ResultArea = ({ interestPoints }) => {
             <th>Name</th>
             <th>Distance to Point (mi)</th>
             <th>Address</th>
+            <th>Open Now?</th>
             <th>Rating</th>
             <th>Price Level</th>
           </tr>
@@ -114,6 +119,7 @@ const ResultArea = ({ interestPoints }) => {
               <td>{point.name}</td>
               <td>{point.distance.toFixed(2)}</td>
               <td>{point.address}</td>
+              <td>{point.isOpen === "N/A" ? "N/A" : (point.isOpen === "true" ? `Yes` : `No`)}</td>
               <td>{point.rating === "N/A" ? "N/A" : `${point.rating}/5`}</td>
               <td>{point.priceLevel}</td>
             </tr>
