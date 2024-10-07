@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./ResultArea.css";
+import { point } from "leaflet";
 
-const ResultArea = ({ interestPoints }) => {
-  const [sortedPoints, setSortedPoints] = useState(interestPoints);
+const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints }) => {
   const [sortCriteria, setSortCriteria] = useState("distAsc");
   const [filterCriteria, setFilterCriteria] = useState("all");
-  const [filteredPoints, setFilteredPoints] = useState(interestPoints);
   const [entriesToShow, setEntriesToShow] = useState(10);
 
   const handleEntriesChange = (event) => {
@@ -36,29 +35,40 @@ const ResultArea = ({ interestPoints }) => {
         }
       );
       const data = await response.json();
-      console.log("Sorted Points:", data); // Check the data structure
-      setSortedPoints(data);
+      setInterestPoints(data); // Directly update interestPoints
     };
 
     sortPoints();
-  }, [sortCriteria, interestPoints]);
+  }, [sortCriteria]);
 
   useEffect(() => {
-    const newFilteredPoints = sortedPoints.filter(
-      (point) => filterCriteria === "all" || point.types.includes(filterCriteria)
-    );
-    setFilteredPoints(newFilteredPoints); // Update filteredPoints with the filtered list
-  }, [filterCriteria, sortedPoints]);
+    const filterPoints = () => {
+      const newFilteredPoints = apiInterestPoints.filter(
+        (point) => filterCriteria === "all" || point.types.includes(filterCriteria)
+      );
+      setInterestPoints(newFilteredPoints); // Directly update interestPoints
+    };
 
-  useEffect(() => {
-    // Update entriesToShow based on filteredPoints length
-    if (filteredPoints.length > 0 && entriesToShow === 0) {
-      // Set entriesToShow to a default value (e.g., 10) or the length of filtered points
-      setEntriesToShow(Math.min(filteredPoints.length, 10)); 
-    } else if (filteredPoints.length > 0) {
-      setEntriesToShow(Math.min(filteredPoints.length, entriesToShow));
+
+    filterPoints();
+
+
+    if (interestPoints.length > 0 && entriesToShow === 0) {
+      setEntriesToShow(Math.min(interestPoints.length, 10));
+    } else if (interestPoints.length > 0) {
+      setEntriesToShow(Math.min(interestPoints.length, entriesToShow));
     }
-  }, [filterCriteria, filteredPoints.length]);
+    console.log("Entries to show after filtering ", entriesToShow);
+
+  }, [filterCriteria]);
+
+  useEffect(() => {
+    if (interestPoints.length > 0 && entriesToShow === 0) {
+      setEntriesToShow(Math.min(interestPoints.length, 10));
+    } else if (interestPoints.length > 0) {
+      setEntriesToShow(Math.min(interestPoints.length, entriesToShow));
+    }
+  }, [interestPoints]);
 
   return (
     <div className="results-section">
@@ -83,7 +93,7 @@ const ResultArea = ({ interestPoints }) => {
         <input
           type="number"
           min="1"
-          max={filteredPoints.length}
+          max={interestPoints.length}
           value={entriesToShow}
           onChange={handleEntriesChange}
         />
@@ -109,7 +119,7 @@ const ResultArea = ({ interestPoints }) => {
           </tr>
         </thead>
         <tbody>
-          {filteredPoints.slice(0, entriesToShow).map((point, index) => (
+          {interestPoints.slice(0, entriesToShow).map((point, index) => (
             <tr key={index}>
               <td>{point.name}</td>
               <td>{point.distance.toFixed(2)}</td>
