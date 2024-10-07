@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./ResultArea.css";
 
 const ResultArea = ({ interestPoints }) => {
-  const [entriesToShow, setEntriesToShow] = useState(10);
   const [sortedPoints, setSortedPoints] = useState(interestPoints);
   const [sortCriteria, setSortCriteria] = useState("distAsc");
   const [filterCriteria, setFilterCriteria] = useState("all");
+  const [filteredPoints, setFilteredPoints] = useState(interestPoints);
+  const [entriesToShow, setEntriesToShow] = useState(10);
 
   const handleEntriesChange = (event) => {
     const value = Number(event.target.value);
@@ -23,11 +24,6 @@ const ResultArea = ({ interestPoints }) => {
   };
 
   useEffect(() => {
-    const filteredPoints = interestPoints.filter((point) => {
-      if (filterCriteria === "all") return true;
-      return point.types.includes(filterCriteria);
-    });
-
     const sortPoints = async () => {
       const response = await fetch(
         `${process.env.REACT_APP_SERVER_URL}/api/sort?criteria=${sortCriteria}`,
@@ -36,7 +32,7 @@ const ResultArea = ({ interestPoints }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(filteredPoints),
+          body: JSON.stringify(interestPoints),
         }
       );
       const data = await response.json();
@@ -45,30 +41,49 @@ const ResultArea = ({ interestPoints }) => {
     };
 
     sortPoints();
-  }, [sortCriteria, filterCriteria, interestPoints]);
+  }, [sortCriteria, interestPoints]);
+
+  useEffect(() => {
+    const newFilteredPoints = sortedPoints.filter(
+      (point) => filterCriteria === "all" || point.types.includes(filterCriteria)
+    );
+    setFilteredPoints(newFilteredPoints); // Update filteredPoints with the filtered list
+  }, [filterCriteria, sortedPoints]);
+
+  useEffect(() => {
+    // Update entriesToShow based on filteredPoints length
+    if (filteredPoints.length > 0 && entriesToShow === 0) {
+      // Set entriesToShow to a default value (e.g., 10) or the length of filtered points
+      setEntriesToShow(Math.min(filteredPoints.length, 10)); 
+    } else if (filteredPoints.length > 0) {
+      setEntriesToShow(Math.min(filteredPoints.length, entriesToShow));
+    }
+  }, [filterCriteria, filteredPoints.length]);
 
   return (
     <div className="results-section">
       <h2>Search Results</h2>
       <div className="filter-section">
-        <label>Filters:</label>
+        <span style={{ marginRight: "5px" }}>Filters:</span>
         <select
           id="filter"
           onChange={handleFilterChange}
           value={filterCriteria}
         >
           <option value="all">All</option>
-          <option value="food">Food</option>
+          <option value="restaurant">Food</option>
           <option value="lodging">Lodging</option>
+          <option value="hospital">Hospitals</option>
+          <option value="store">Stores</option>
+          <option value="tourist_attraction">Attractions</option>
         </select>
       </div>
-
       <div className="entries-control">
         Show
         <input
           type="number"
           min="1"
-          max={sortedPoints.length}
+          max={filteredPoints.length}
           value={entriesToShow}
           onChange={handleEntriesChange}
         />
@@ -94,7 +109,7 @@ const ResultArea = ({ interestPoints }) => {
           </tr>
         </thead>
         <tbody>
-          {sortedPoints.slice(0, entriesToShow).map((point, index) => (
+          {filteredPoints.slice(0, entriesToShow).map((point, index) => (
             <tr key={index}>
               <td>{point.name}</td>
               <td>{point.distance.toFixed(2)}</td>
