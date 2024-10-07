@@ -1,7 +1,9 @@
 package com.example.TravelPal.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,7 @@ public class ApiController {
         double radius = searchRequest.getRadius();
         
         List<InterestPoint> allPoints = new ArrayList<>();
+        Set<String> interestPointHash = new HashSet<>();
         String[] types = {"restaurant", "lodging", "hospital", "tourist_attraction", "store"};
 
         for (int i = 0; i < types.length; i++) {
@@ -45,9 +48,13 @@ public class ApiController {
                 // Parse the JSON response and calculate distances
                 List<InterestPoint> interestPoints = googlePlacesParser.parseInterestPoints(jsonResponse, latitude, longitude);
                 for (InterestPoint ip : interestPoints) {
+                    if (!interestPointHash.contains(ip.getName() + ":" + ip.getAddress())) {
+                        allPoints.add(ip);
+                        interestPointHash.add(ip.getName() + ":" + ip.getAddress());
+                    }
                     System.out.println(ip.getLat() + " "  +  ip.getLongi() + " " + ip.getAddress());
                 }
-                allPoints.addAll(interestPoints);
+                
             } catch (Exception e) {
                 e.printStackTrace();
                 return ResponseEntity.status(500).build();  // Return 500 if there's a parsing error
