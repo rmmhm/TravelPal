@@ -99,9 +99,9 @@ const Login = () => {
           Log in
         </button>
         <div className="additional-options">
-          <Link to="/forgot-password" className="forgot-password-link">
+          {/* <Link to="/forgot-password" className="forgot-password-link">
             Forgot Password?
-          </Link>
+          </Link> */}
           <p>
             Don't have an account?{" "}
             <Link to="/signup" className="sign-up-link">
