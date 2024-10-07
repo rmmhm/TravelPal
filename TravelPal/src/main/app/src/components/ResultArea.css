@@ -32,12 +32,8 @@ td {
 .entries-control input {
   margin: 0 5px;
   padding: 5px;
-  width: 30px;
+  width: 40px;
   text-align: right;
-}
-
-.filter-section {
-  margin-bottom: 15px;
 }
 
 .entries-control select {

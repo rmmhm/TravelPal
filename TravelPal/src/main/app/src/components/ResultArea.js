@@ -7,6 +7,7 @@ const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints }) =>
   const [filterCriteria, setFilterCriteria] = useState("all");
   const [entriesToShow, setEntriesToShow] = useState(10);
 
+  // Update num entries field
   const handleEntriesChange = (event) => {
     const value = Number(event.target.value);
     if (value > 0) {
@@ -14,14 +15,17 @@ const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints }) =>
     }
   };
 
+  // Update sorting criteria
   const handleSortChange = (event) => {
     setSortCriteria(event.target.value);
   };
 
+  /// Update results filter
   const handleFilterChange = (event) => {
     setFilterCriteria(event.target.value);
   };
 
+  // Re-sort interest points when sorting criteria changes
   useEffect(() => {
     const sortPoints = async () => {
       const response = await fetch(
@@ -41,6 +45,7 @@ const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints }) =>
     sortPoints();
   }, [sortCriteria]);
 
+  // Re-filter the sorted points when filtering criteria changes, or when interest points get re-sorted
   useEffect(() => {
     const filterPoints = () => {
       const newFilteredPoints = apiInterestPoints.filter(
@@ -48,18 +53,7 @@ const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints }) =>
       );
       setInterestPoints(newFilteredPoints); // Directly update interestPoints
     };
-
-
     filterPoints();
-
-
-    if (interestPoints.length > 0 && entriesToShow === 0) {
-      setEntriesToShow(Math.min(interestPoints.length, 10));
-    } else if (interestPoints.length > 0) {
-      setEntriesToShow(Math.min(interestPoints.length, entriesToShow));
-    }
-    console.log("Entries to show after filtering ", entriesToShow);
-
   }, [filterCriteria]);
 
   useEffect(() => {
@@ -73,21 +67,6 @@ const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints }) =>
   return (
     <div className="results-section">
       <h2>Search Results</h2>
-      <div className="filter-section">
-        <span style={{ marginRight: "5px" }}>Filters:</span>
-        <select
-          id="filter"
-          onChange={handleFilterChange}
-          value={filterCriteria}
-        >
-          <option value="all">All</option>
-          <option value="restaurant">Food</option>
-          <option value="lodging">Lodging</option>
-          <option value="hospital">Hospitals</option>
-          <option value="store">Stores</option>
-          <option value="tourist_attraction">Attractions</option>
-        </select>
-      </div>
       <div className="entries-control">
         Show
         <input
@@ -107,6 +86,19 @@ const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints }) =>
           <option value="priceAsc">Price Level: Low to High</option>
           <option value="priceDesc">Price Level: High to Low</option>
         </select>
+        <span style={{ marginRight: "5px", marginLeft: "20px" }}>Filters:</span>
+        <select
+          id="filter"
+          onChange={handleFilterChange}
+          value={filterCriteria}
+        >
+          <option value="all">All</option>
+          <option value="restaurant">Food</option>
+          <option value="lodging">Lodging</option>
+          <option value="hospital">Hospitals</option>
+          <option value="store">Stores</option>
+          <option value="tourist_attraction">Attractions</option>
+        </select>
       </div>
       <table>
         <thead>
@@ -114,6 +106,7 @@ const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints }) =>
             <th>Name</th>
             <th>Distance to Point (mi)</th>
             <th>Address</th>
+            <th>Open Now?</th>
             <th>Rating</th>
             <th>Price Level</th>
           </tr>
@@ -124,6 +117,13 @@ const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints }) =>
               <td>{point.name}</td>
               <td>{point.distance.toFixed(2)}</td>
               <td>{point.address}</td>
+              <td>
+                {point.isOpen === "N/A"
+                  ? "N/A"
+                  : point.isOpen === "true"
+                  ? `Yes`
+                  : `No`}
+              </td>
               <td>{point.rating === "N/A" ? "N/A" : `${point.rating}/5`}</td>
               <td>{point.priceLevel}</td>
             </tr>
