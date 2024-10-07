@@ -5,6 +5,7 @@ const ResultArea = ({ interestPoints }) => {
   const [entriesToShow, setEntriesToShow] = useState(10);
   const [sortedPoints, setSortedPoints] = useState(interestPoints);
   const [sortCriteria, setSortCriteria] = useState("distAsc");
+  const [filterCriteria, setFilterCriteria] = useState("all");
 
   const handleEntriesChange = (event) => {
     const value = Number(event.target.value);
@@ -17,34 +18,48 @@ const ResultArea = ({ interestPoints }) => {
     setSortCriteria(event.target.value);
   };
 
+  const handleFilterChange = (event) => {
+    setFilterCriteria(event.target.value);
+  };
+
   useEffect(() => {
+    const filteredPoints = interestPoints.filter((point) => {
+      if (filterCriteria === "all") return true;
+      return point.types.includes(filterCriteria);
+    });
+
     const sortPoints = async () => {
       const response = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/api/sort?criteria=${sortCriteria}`, 
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(interestPoints),
-      });
+        `${process.env.REACT_APP_SERVER_URL}/api/sort?criteria=${sortCriteria}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(filteredPoints),
+        }
+      );
       const data = await response.json();
-      console.log('Sorted Points:', data); // Check the data structure
+      console.log("Sorted Points:", data); // Check the data structure
       setSortedPoints(data);
     };
 
     sortPoints();
-  }, [sortCriteria, interestPoints]);
+  }, [sortCriteria, filterCriteria, interestPoints]);
 
   return (
     <div className="results-section">
       <h2>Search Results</h2>
       <div className="filter-section">
         <label>Filters:</label>
-        <select id="filter">
+        <select
+          id="filter"
+          onChange={handleFilterChange}
+          value={filterCriteria}
+        >
           <option value="all">All</option>
           <option value="food">Food</option>
-          <option value="entertainment">Entertainment</option>
+          <option value="lodging">Lodging</option>
         </select>
       </div>
 
@@ -58,7 +73,7 @@ const ResultArea = ({ interestPoints }) => {
           onChange={handleEntriesChange}
         />
         entries
-        <span style={{ marginLeft: '20px' }}>Sort:</span>
+        <span style={{ marginLeft: "20px" }}>Sort:</span>
         <select onChange={handleSortChange} value={sortCriteria}>
           <option value="distAsc">Distance: Low to High</option>
           <option value="distDesc">Distance: High to Low</option>

@@ -1,5 +1,7 @@
 package com.example.TravelPal.model;
 
+import java.util.List;
+
 public class InterestPoint {
 
     private float lat;
@@ -11,9 +13,10 @@ public class InterestPoint {
     private String websiteLink;
     private String priceLevel;
     private String address;  // Replacing vicinity with address
+    private List<String> types;
 
     // Constructor
-    public InterestPoint(float lat, float longi, String name, float distance, String rating, String directionLink, String websiteLink, String priceLevel, String address) {
+    public InterestPoint(float lat, float longi, String name, float distance, String rating, String directionLink, String websiteLink, String priceLevel, String address, List<String> types) {
         this.lat = lat;
         this.longi = longi;
         this.name = name;
@@ -23,6 +26,7 @@ public class InterestPoint {
         this.websiteLink = websiteLink;
         this.priceLevel = priceLevel;
         this.address = address;  // Set address
+        this.types = types;
     }
 
     // Getters and setters for all fields
@@ -101,5 +105,13 @@ public class InterestPoint {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public List<String> getTypes() {
+        return types;
+    }
+
+    public void setType(List<String> types) {
+        this.types = types;
     }
 }
