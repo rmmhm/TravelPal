@@ -11,6 +11,7 @@ function App() {
   return (
     <>
       <NavBar />
+      <div className="center-container">
       <Routes>
         <Route path="/" element={<Navigate to="/welcome" />} />
         <Route path="/welcome" element={<Welcome />} />
@@ -19,6 +20,7 @@ function App() {
         <Route path="/map" element={<Map />} />
         {/* <Route path="/about" element={<About />} /> */}
       </Routes>
+    </div>
     </>
   );
 }
