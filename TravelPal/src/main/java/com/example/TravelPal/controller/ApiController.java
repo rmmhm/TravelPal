@@ -1,5 +1,6 @@
 package com.example.TravelPal.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,30 +31,38 @@ public class ApiController {
         float latitude = searchRequest.getLatitude();
         float longitude = searchRequest.getLongitude();
         double radius = searchRequest.getRadius();
+        
+        List<InterestPoint> allPoints = new ArrayList<>();
+        String[] types = {"restaurant", "lodging", "hospital", "tourist_attraction", "store"};
 
-        // Call the Google Places API and retrieve the raw JSON response
-        String jsonResponse = getNearbyPlaces(latitude, longitude, radius * 1609.34);
+        for (int i = 0; i < types.length; i++) {
+            String type = types[i];
+        
+            // Call the Google Places API and retrieve the raw JSON response
+            String jsonResponse = getNearbyPlaces(latitude, longitude, radius * 1609.34, type);
 
-        try {
-            // Parse the JSON response and calculate distances
-            List<InterestPoint> interestPoints = googlePlacesParser.parseInterestPoints(jsonResponse, latitude, longitude);
-            for (InterestPoint ip : interestPoints) {
-                System.out.println(ip.getLat() + " "  +  ip.getLongi() + " " + ip.getAddress());
+            try {
+                // Parse the JSON response and calculate distances
+                List<InterestPoint> interestPoints = googlePlacesParser.parseInterestPoints(jsonResponse, latitude, longitude);
+                for (InterestPoint ip : interestPoints) {
+                    System.out.println(ip.getLat() + " "  +  ip.getLongi() + " " + ip.getAddress());
+                }
+                allPoints.addAll(interestPoints);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.status(500).build();  // Return 500 if there's a parsing error
             }
-
-            // Return the list of InterestPoints with distances
-            return ResponseEntity.ok(interestPoints);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).build();  // Return 500 if there's a parsing error
         }
+        // Return the list of InterestPoints with distance
+        return ResponseEntity.ok(allPoints);
     }
 
     // Method to call Google Places API and get the JSON response (simplified here)
-    public String getNearbyPlaces(float latitude, float longitude, double radius) {
+    public String getNearbyPlaces(float latitude, float longitude, double radius, String type) {
         String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
         + "location=" + latitude + "," + longitude 
         + "&radius=" + radius
+        + "&type=" + type
         + "&key=" + GOOGLE_API_KEY;  // Use the injected API key
 
 
