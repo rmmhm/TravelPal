@@ -50,7 +50,8 @@ const ResultArea = ({ interestPoints }) => {
   // Re-filter the sorted points when filtering criteria changes, or when interest points get re-sorted
   useEffect(() => {
     const newFilteredPoints = sortedPoints.filter(
-      (point) => filterCriteria === "all" || point.types.includes(filterCriteria)
+      (point) =>
+        filterCriteria === "all" || point.types.includes(filterCriteria)
     );
     setFilteredPoints(newFilteredPoints);
   }, [filterCriteria, sortedPoints]);
@@ -58,7 +59,7 @@ const ResultArea = ({ interestPoints }) => {
   // Reset num entries if the number of filtered points changes
   useEffect(() => {
     if (filteredPoints.length > 0 && entriesToShow === 0) {
-      setEntriesToShow(Math.min(filteredPoints.length, 10)); 
+      setEntriesToShow(Math.min(filteredPoints.length, 10));
     } else if (filteredPoints.length > 0) {
       setEntriesToShow(Math.min(filteredPoints.length, entriesToShow));
     }
@@ -67,21 +68,6 @@ const ResultArea = ({ interestPoints }) => {
   return (
     <div className="results-section">
       <h2>Search Results</h2>
-      <div className="filter-section">
-        <span style={{ marginRight: "5px" }}>Filters:</span>
-        <select
-          id="filter"
-          onChange={handleFilterChange}
-          value={filterCriteria}
-        >
-          <option value="all">All</option>
-          <option value="restaurant">Food</option>
-          <option value="lodging">Lodging</option>
-          <option value="hospital">Hospitals</option>
-          <option value="store">Stores</option>
-          <option value="tourist_attraction">Attractions</option>
-        </select>
-      </div>
       <div className="entries-control">
         Show
         <input
@@ -101,6 +87,19 @@ const ResultArea = ({ interestPoints }) => {
           <option value="priceAsc">Price Level: Low to High</option>
           <option value="priceDesc">Price Level: High to Low</option>
         </select>
+        <span style={{ marginRight: "5px", marginLeft: "20px" }}>Filters:</span>
+        <select
+          id="filter"
+          onChange={handleFilterChange}
+          value={filterCriteria}
+        >
+          <option value="all">All</option>
+          <option value="restaurant">Food</option>
+          <option value="lodging">Lodging</option>
+          <option value="hospital">Hospitals</option>
+          <option value="store">Stores</option>
+          <option value="tourist_attraction">Attractions</option>
+        </select>
       </div>
       <table>
         <thead>
@@ -119,7 +118,13 @@ const ResultArea = ({ interestPoints }) => {
               <td>{point.name}</td>
               <td>{point.distance.toFixed(2)}</td>
               <td>{point.address}</td>
-              <td>{point.isOpen === "N/A" ? "N/A" : (point.isOpen === "true" ? `Yes` : `No`)}</td>
+              <td>
+                {point.isOpen === "N/A"
+                  ? "N/A"
+                  : point.isOpen === "true"
+                  ? `Yes`
+                  : `No`}
+              </td>
               <td>{point.rating === "N/A" ? "N/A" : `${point.rating}/5`}</td>
               <td>{point.priceLevel}</td>
             </tr>
