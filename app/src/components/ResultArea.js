@@ -10,7 +10,7 @@ const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints, setE
   // Update num entries field
   const handleEntriesChange = (event) => {
     const value = Number(event.target.value);
-    if (value > 0) {
+    if (value > 0 && value < interestPoints.length) {
       setEntriesToShow(value);
     }
   };
@@ -77,6 +77,27 @@ const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints, setE
       setEntriesToShow(Math.min(interestPoints.length, entriesToShow));
     }
   }, [interestPoints]);
+
+
+  useEffect(() => {
+    const sortPoints = async () => {
+      const response = await fetch(
+        `${process.env.REACT_APP_SERVER_URL}/api/sort?criteria=${sortCriteria}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(interestPoints),
+        }
+      );
+      const data = await response.json();
+      setInterestPoints(data); // Directly update interestPoints
+      setFilterCriteria("all");
+    };
+    sortPoints();
+  }, [apiInterestPoints]);
+
 
   return (
     <div className="results-section">

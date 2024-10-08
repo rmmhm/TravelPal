@@ -61,6 +61,7 @@ const Map = () => {
         // Assuming interestPointsData is an array of interest points
         setInterestPoints(interestPointsData); // Set the interestPoints directly from backend
         setApiInterestPoints(interestPointsData);
+        setEntriesToShow(Math.min(interestPointsData.length, 10))
       } else {
         console.error("Failed to fetch interest points");
         console.log(await response.text());
