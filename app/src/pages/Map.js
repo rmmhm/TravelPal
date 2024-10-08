@@ -12,6 +12,7 @@ const Map = () => {
   const [centerPosition, setCenterPosition] = useState([33.777, -84.396]);
   const [interestPoints, setInterestPoints] = useState([]);
   const [apiInterestPoints, setApiInterestPoints] = useState([]);
+  const [entriesToShow, setEntriesToShow] = useState(10);
 
   const handleSearch = async () => {
     let newLatitude = parseFloat(searchLatitude);
@@ -60,6 +61,7 @@ const Map = () => {
         // Assuming interestPointsData is an array of interest points
         setInterestPoints(interestPointsData); // Set the interestPoints directly from backend
         setApiInterestPoints(interestPointsData);
+        setEntriesToShow(Math.min(interestPointsData.length, 10))
       } else {
         console.error("Failed to fetch interest points");
         console.log(await response.text());
@@ -111,11 +113,12 @@ const Map = () => {
       </div>
 
       <div className="results-map-container">
-        <ResultArea interestPoints={interestPoints} setInterestPoints={setInterestPoints} apiInterestPoints={apiInterestPoints} />
+        <ResultArea interestPoints={interestPoints} setInterestPoints={setInterestPoints} apiInterestPoints={apiInterestPoints} entriesToShow={entriesToShow} setEntriesToShow={setEntriesToShow} />
         {/* Pass interestPoints to ResultArea component */}
         <MapSection
           centerPosition={centerPosition}
           interestPoints={interestPoints}
+          entriesToShow={entriesToShow}
         />
         {/* Pass both centerPosition and interestPoints to MapSection component */}
       </div>

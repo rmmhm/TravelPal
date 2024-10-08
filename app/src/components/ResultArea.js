@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import "./ResultArea.css";
 import { point } from "leaflet";
 
-const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints }) => {
+const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints, setEntriesToShow, entriesToShow }) => {
   const [sortCriteria, setSortCriteria] = useState("distAsc");
   const [filterCriteria, setFilterCriteria] = useState("all");
-  const [entriesToShow, setEntriesToShow] = useState(10);
+  
 
   // Update num entries field
   const handleEntriesChange = (event) => {
     const value = Number(event.target.value);
-    if (value > 0) {
+    if (value > 0 && value < interestPoints.length) {
       setEntriesToShow(value);
     }
   };
@@ -47,13 +47,27 @@ const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints }) =>
 
   // Re-filter the sorted points when filtering criteria changes, or when interest points get re-sorted
   useEffect(() => {
-    const filterPoints = () => {
+    const filterPoints = async () => {
       const newFilteredPoints = apiInterestPoints.filter(
         (point) => filterCriteria === "all" || point.types.includes(filterCriteria)
       );
-      setInterestPoints(newFilteredPoints); // Directly update interestPoints
+      const response = await fetch(
+        `${process.env.REACT_APP_SERVER_URL}/api/sort?criteria=${sortCriteria}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newFilteredPoints),
+        }
+      );
+      const data = await response.json();
+      setInterestPoints(data); // Directly update interestPoints
+      setEntriesToShow(Math.min(interestPoints.length, 10));
     };
+
     filterPoints();
+    
   }, [filterCriteria]);
 
   useEffect(() => {
@@ -63,6 +77,27 @@ const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints }) =>
       setEntriesToShow(Math.min(interestPoints.length, entriesToShow));
     }
   }, [interestPoints]);
+
+
+  useEffect(() => {
+    const sortPoints = async () => {
+      const response = await fetch(
+        `${process.env.REACT_APP_SERVER_URL}/api/sort?criteria=${sortCriteria}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(interestPoints),
+        }
+      );
+      const data = await response.json();
+      setInterestPoints(data); // Directly update interestPoints
+      setFilterCriteria("all");
+    };
+    sortPoints();
+  }, [apiInterestPoints]);
+
 
   return (
     <div className="results-section">
