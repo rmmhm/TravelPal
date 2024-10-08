@@ -3,6 +3,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "./NavBar.css";
 
 const NavBar = () => {
+  // State variables
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -10,6 +11,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Listen for token changes in local storage
   useEffect(() => {
     const handleStorageTokenChange = () => {
       setShouldValidate(true);
@@ -21,6 +23,7 @@ const NavBar = () => {
     };
   }, [navigate]);
 
+  // Handle navigation based on authentication status
   useEffect(() => {
     if (!isAuthenticated && !isLoggingOut && !shouldValidate && !isLoading) {
       if (location.pathname.includes("/map")) {
@@ -38,6 +41,7 @@ const NavBar = () => {
     shouldValidate,
   ]);
 
+  // Validate the authentication token
   useEffect(() => {
     const validateToken = async () => {
       const token = localStorage.getItem("token");
@@ -74,6 +78,7 @@ const NavBar = () => {
     setShouldValidate(false);
   }, [navigate, shouldValidate, isLoading]);
 
+  // Logout function
   const handleLogout = async (event) => {
     event.preventDefault();
     setIsLoggingOut(true);
@@ -93,13 +98,12 @@ const NavBar = () => {
       localStorage.removeItem("token");
       setIsAuthenticated(false);
       navigate("/login");
-      setIsLoggingOut(false); // Update logout state
-      // After successful logout and setting isLoggingOut to false, navigate
+      setIsLoggingOut(false);
     } else {
       console.error("Failed to log out");
       console.log(await response.text());
       setIsAuthenticated(false);
-      setIsLoggingOut(false); // Ensure we stop showing logging out state
+      setIsLoggingOut(false);
     }
   };
 
@@ -109,14 +113,11 @@ const NavBar = () => {
         <li>
           <NavLink
             to="/welcome"
-            className={({ isActive }) => {
-              return isActive ? "active-link" : "";
-            }}
+            className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             Home
           </NavLink>
         </li>
-        {/* replace with logged in check */}
         {isAuthenticated && (
           <li>
             <NavLink to="#" className="logout-link" onClick={handleLogout}>
