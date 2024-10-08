@@ -2,12 +2,18 @@
 
 **TravelPal** is a web application that helps users explore nearby locations based on latitude and longitude. It features various filters such as food, entertainment, and more, allowing users to find exactly what they are looking for. The project utilizes a React frontend and a Spring Boot backend, and it integrates with the Google Maps API to fetch and display location data.
 
-## Release 1.0
+## Release 1.1
 The current release of **TravelPal** includes the following features:
 - **Search by Location**: Enter latitude and longitude to get a list of nearby places.
 - **Filter by Category**: Narrow down results using filters like food, entertainment, etc.
 - **Google Maps Integration**: Leverages the Google Maps API to get real-time location data.
 - **Responsive UI**: The interface adapts to different screen sizes, providing a seamless experience on any device.
+### Bug Fixes and Improvements
+- Changed coordinate system to improve reliability and reduce user error
+- Split backend and frontend to improve modularity
+- Updated packages used and fixed an issue with the open feature
+### Known Issues
+- Login may fail (Check troubleshooting)
 
 ## Future Plans
 - **User Caching**: Implement user history for personalized requests
@@ -85,3 +91,4 @@ Ensure you have the following installed on your system:
     ```
 
 3. Access the application by visiting `http://localhost:3000`.
+4. Create an account and login to access the core service
