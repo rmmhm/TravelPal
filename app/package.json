@@ -26,7 +26,8 @@
   "options": {
     "allowedHosts": [
       "localhost",
-      ".localhost"
+      ".localhost",
+      "https://travelpal-backend.ue.r.appspot.com"
     ],
     "proxy": "https://localhost:8080/"
   },

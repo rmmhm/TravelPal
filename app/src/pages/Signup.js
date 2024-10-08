@@ -45,7 +45,7 @@ const Signup = () => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/auth/signup`,
+        `${process.env.REACT_APP_SERVER_URL}/api/auth/signup`,
         {
           method: "POST",
           headers: {
