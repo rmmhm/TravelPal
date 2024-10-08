@@ -18,7 +18,6 @@ The current release of **TravelPal** includes the following features:
 - Updated packages used and fixed an issue with the open feature
 ### Known Issues
 - Login may fail (Check troubleshooting)
-
 ## Future Plans
 - **User Caching**: Implement user history for personalized requests
 - **Advanced Filters**: Add more specific filters such as price range, ratings.
