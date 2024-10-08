@@ -92,3 +92,47 @@ Ensure you have the following installed on your system:
 
 3. Access the application by visiting `http://localhost:3000`.
 4. Create an account and login to access the core service
+
+---
+
+## Troubleshooting
+
+During installation, you might encounter the following common issues:
+
+### 1. **npm: Command Not Found**
+   **Cause**: Node.js is not installed or not added to your system's PATH.
+   **Fix**:
+   - Ensure Node.js is installed. You can check by running `node -v` in your terminal.
+   - If Node.js is installed but `npm` isn't found, ensure your Node.js directory is in the system's PATH.
+   - For Windows, reinstall Node.js and select the option to add it to the PATH.
+   - For MacOS/Linux, try restarting your terminal after installation or manually adding Node.js to your PATH.
+   - If using fnm ensure that fnm is initialized on terminal startup or run (Powershell only):
+
+   ```bash
+        fnm env --use-on-cd | Out-String | Invoke-Expression
+   ```
+
+### 2. **mvn: Command Not Found**
+   **Cause**: Maven is not installed or not added to your system's PATH.
+   **Fix**:
+   - Ensure Maven is installed. You can check by running `mvn -v`.
+   - Add Maven to your system’s PATH if it's not there. Refer to [this guide](https://maven.apache.org/install.html) for instructions.
+
+### 3. **Unable to login (locally)**
+   **Cause**: .env file is not set 
+   **Fix**:
+   - Make sure you added the port to  `.env` file in the frontend directory as:
+     ```
+     REACT_APP_SERVER_URL=http://localhost:8080
+     ```
+
+### 5. **Backend Fails to Start**
+   **Cause**: Missing or incorrect Java version, or a Maven build failure.
+   **Fix**:
+   - Ensure Java 17 or higher is installed (`java -version`).
+   - Check for errors during the `mvn clean install` step and resolve them based on the logs.
+   - Verify that no other service is using the backend port (default: 8080).
+
+---
+
+Feel free to contribute to the project or submit any issues you encounter!
