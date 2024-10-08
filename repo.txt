@@ -1,1 +1,2 @@
 rmmhm/TravelPal
+auth=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
