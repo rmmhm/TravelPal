@@ -1,0 +1,11 @@
+runtime: nodejs20  # Adjust to your Node.js version
+
+handlers:
+  # Serve static files
+  - url: /static
+    static_dir: build/static
+
+  # Catch-all route to serve index.html
+  - url: /.*
+    static_files: build/index.html
+    upload: build/index.html
