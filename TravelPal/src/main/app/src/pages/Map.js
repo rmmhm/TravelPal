@@ -23,7 +23,7 @@ const Map = () => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/api/googleApiCall`,
+        `${process.env.REACT_APP_SERVER_URL}/googleApiCall`,
         {
           method: "POST",
           headers: {

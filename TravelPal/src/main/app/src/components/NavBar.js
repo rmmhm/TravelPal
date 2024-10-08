@@ -44,7 +44,7 @@ const NavBar = () => {
       if (token) {
         try {
           const response = await fetch(
-            `${process.env.REACT_APP_SERVER_URL}/api/auth/validate`,
+            `${process.env.REACT_APP_SERVER_URL}/auth/validate`,
             {
               method: "POST",
               headers: {
@@ -79,7 +79,7 @@ const NavBar = () => {
     setIsLoggingOut(true);
     let token = localStorage.getItem("token");
     let response = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}/api/auth/logout`,
+      `${process.env.REACT_APP_SERVER_URL}/auth/logout`,
       {
         method: "POST",
         headers: {
