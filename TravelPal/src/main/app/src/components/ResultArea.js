@@ -29,7 +29,7 @@ const ResultArea = ({ interestPoints, setInterestPoints, apiInterestPoints }) =>
   useEffect(() => {
     const sortPoints = async () => {
       const response = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/sort?criteria=${sortCriteria}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/sort?criteria=${sortCriteria}`,
         {
           method: "POST",
           headers: {
