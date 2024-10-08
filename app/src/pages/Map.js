@@ -7,14 +7,30 @@ const Map = () => {
   const [searchLatitude, setSearchLatitude] = useState("");
   const [searchLongitude, setSearchLongitude] = useState("");
   const [searchRadius, setSearchRadius] = useState("");
+  const [latDirection, setLatDirection] = useState(""); // Dropdown for North/South
+  const [longDirection, setLongDirection] = useState(""); // Dropdown for East/West
   const [centerPosition, setCenterPosition] = useState([33.777, -84.396]);
   const [interestPoints, setInterestPoints] = useState([]);
   const [apiInterestPoints, setApiInterestPoints] = useState([]);
 
   const handleSearch = async () => {
-    const newLatitude = parseFloat(searchLatitude);
-    const newLongitude = parseFloat(searchLongitude);
+    let newLatitude = parseFloat(searchLatitude);
+    let newLongitude = parseFloat(searchLongitude);
     const newRadius = parseFloat(searchRadius);
+
+    // Adjust latitude/longitude based on the selected direction
+    if (latDirection === "South" && !isNaN(newLatitude)) {
+      newLatitude = -Math.abs(newLatitude);
+    }
+    if (latDirection === "North" && !isNaN(newLatitude)) {
+      newLatitude = Math.abs(newLatitude);
+    }
+    if (longDirection === "West" && !isNaN(newLongitude)) {
+      newLongitude = -Math.abs(newLongitude);
+    }
+    if (longDirection === "East" && !isNaN(newLongitude)) {
+      newLongitude = Math.abs(newLongitude);
+    }
 
     if (!isNaN(newLatitude) && !isNaN(newLongitude) && !isNaN(newRadius)) {
       setCenterPosition([newLatitude, newLongitude]);
@@ -63,6 +79,11 @@ const Map = () => {
             value={searchLatitude}
             onChange={(e) => setSearchLatitude(e.target.value)}
           />
+          <select value={latDirection} onChange={(e) => setLatDirection(e.target.value)}>
+            <option value="">--Select--</option>
+            <option value="North">North</option>
+            <option value="South">South</option>
+          </select>
         </label>
         <label>
           Longitude:
@@ -71,6 +92,11 @@ const Map = () => {
             value={searchLongitude}
             onChange={(e) => setSearchLongitude(e.target.value)}
           />
+          <select value={longDirection} onChange={(e) => setLongDirection(e.target.value)}>
+            <option value="">--Select--</option>
+            <option value="East">East</option>
+            <option value="West">West</option>
+          </select>
         </label>
         <label>
           Search Radius:
@@ -98,6 +124,3 @@ const Map = () => {
 };
 
 export default Map;
-
-
-
