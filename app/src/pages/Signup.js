@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Signup.css"; // Optional: Import a CSS file for styling
 
 const Signup = () => {
+  // State variables
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -10,6 +11,7 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
+  // Check if the form is valid
   const validateForm = () => {
     if (!username || !password) {
       setError("Email and password are required.");
@@ -36,6 +38,7 @@ const Signup = () => {
     return true;
   };
 
+  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -71,6 +74,7 @@ const Signup = () => {
     }
   };
 
+  // JS
   return (
     <div className="signup-container">
       <h1>Create Your Account!</h1>
