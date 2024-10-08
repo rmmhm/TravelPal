@@ -26,8 +26,7 @@ const redIcon = new L.Icon({
   shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
   shadowSize: [41, 41],
 });
-
-const MapSection = ({ centerPosition, interestPoints }) => {
+const MapSection = ({ centerPosition, interestPoints, entriesToShow }) => {
   return (
     <div className="map-section">
       <MapContainer
@@ -44,8 +43,8 @@ const MapSection = ({ centerPosition, interestPoints }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* Loop through interestPoints and render a marker for each */}
-        {interestPoints.map((point, index) => (
+        {/* Limit the markers to `entriesToShow` */}
+        {interestPoints.slice(0, entriesToShow).map((point, index) => (
           <Marker
             key={index}
             position={[point.lat, point.longi]} // Using lat and longi from backend response
@@ -89,5 +88,4 @@ const MapSection = ({ centerPosition, interestPoints }) => {
     </div>
   );
 };
-
-export default MapSection;
+export default MapSection
