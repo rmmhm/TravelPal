@@ -136,6 +136,7 @@ During installation, you might encounter the following common issues:
    - Ensure Java 17 or higher is installed (`java -version`).
    - Check for errors during the `mvn clean install` step and resolve them based on the logs.
    - Verify that no other service is using the backend port (default: 8080).
+   - Ensure path is properly set and follow install instructions again
 
 ---
 
