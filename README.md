@@ -17,7 +17,7 @@ The current release of **TravelPal** includes the following features:
 - Split backend and frontend to improve modularity
 - Updated packages used and fixed an issue with the open feature
 ### Known Issues
-- Login may fail (Check troubleshooting)
+- Login may fail (Check troubleshooting section)
 
 ## Future Plans
 - **User Caching**: Implement user history for personalized requests
