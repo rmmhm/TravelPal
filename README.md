@@ -23,7 +23,7 @@ The current release of **TravelPal** includes the following features:
 - **User Caching**: Implement user history for personalized requests
 - **Advanced Filters**: Add more specific filters such as price range, ratings.
 - **Location Sharing**: Allow users to share their current location with friends.
-
+- **Dynamic Location Update**: Update location and pins based on central location on map
 ---
 
 ## Setup & Installation
