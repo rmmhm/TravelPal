@@ -25,6 +25,7 @@ The current release of **TravelPal** includes the following features:
 - **Dynamic Location Update**: Update location and pins based on central location on map
 ---
 
+
 ## Setup & Installation
 
 ### Prerequisites
